@@ -1,0 +1,60 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: certificate-verification-system
+
+  # Database Configuration (H2 in-memory DB enabled by default with MySQL compatibility mode)
+  datasource:
+    url: jdbc:h2:mem:certdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+    # To connect to MySQL server, uncomment the following:
+    # url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:cert_db}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # username: ${DB_USERNAME:root}
+    # password: ${DB_PASSWORD:Priyan@123}
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+
+  devtools:
+    restart:
+      enabled: true
+      poll-interval: 1000ms
+      quiet-period: 400ms
+
+  web:
+    resources:
+      cache:
+        period: 0
+
+app:
+  base-url: http://localhost:8080
+  upload-dir: uploads/certificates
+
+logging:
+  level:
+    com.example.certificateverification: DEBUG
+    org.springframework.security: INFO

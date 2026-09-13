@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Digital Certificate Verification System</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">🔑</div>
+        <h1 class="auth-title">Portal Sign In</h1>
+        <p class="auth-subtitle">Sign in with your registered account to access your dashboard.</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="username">Username or Student Roll Number</label>
+          <input type="text" id="username" class="form-control" placeholder="e.g. admin@cert.com or STU1001" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; margin-top: var(--spacing-md);">
+          Sign In
+        </button>
+      </form>
+
+      <div class="auth-footer" style="margin-top: var(--spacing-lg);">
+        <p><a href="/index.html">← Back to Public Certificate Verification</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/auth.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // If already logged in, redirect to dashboard
+      const user = Auth.getCurrentUser();
+      if (user) {
+        window.location.href = user.role === "ADMIN" ? APP_CONFIG.routes.adminDashboard : APP_CONFIG.routes.studentDashboard;
+      }
+
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+          showLoader();
+          const response = await apiRequest("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ username, password })
+          });
+
+          Auth.setCurrentUser(response);
+
+          if (response.role === "ADMIN") {
+            window.location.href = APP_CONFIG.routes.adminDashboard;
+          } else {
+            window.location.href = APP_CONFIG.routes.studentDashboard;
+          }
+        } catch (err) {
+          showError(err.message || "Invalid credentials provided. Please check your username and password.");
+        } finally {
+          hideLoader();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

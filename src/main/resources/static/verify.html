@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Certificate Verification</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <style>
+    .verify-container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .verify-status-badge {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .status-valid {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--success-color);
+      border: 2px solid var(--success-color);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.3);
+    }
+
+    .status-revoked {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning-color);
+      border: 2px solid var(--warning-color);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+    }
+
+    .status-invalid {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger-color);
+      border: 2px solid var(--danger-color);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .detail-value {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="verify-container">
+      <div id="loadingState">
+        <div class="loader-spinner" style="margin: 0 auto var(--spacing-md) auto; width: 40px; height: 40px;"></div>
+        <p class="text-secondary">Validating certificate verification code...</p>
+      </div>
+
+      <div id="resultState" style="display: none;">
+        <div id="statusBadge" class="verify-status-badge">✓</div>
+        <h1 id="statusTitle" style="font-size: 1.8rem; margin-bottom: var(--spacing-xs);">Certificate Verified</h1>
+        <p id="statusSubtitle" class="text-secondary" style="margin-bottom: var(--spacing-xl);">Verified by Digital Certificate Verification System</p>
+
+        <div id="detailsCard" class="card" style="text-align: left; margin-bottom: var(--spacing-xl);">
+          <div class="detail-row">
+            <span class="detail-label">Certificate Holder</span>
+            <span id="studentName" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Certificate Title</span>
+            <span id="certTitle" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Certificate Number</span>
+            <span id="certNumber" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Course / Program</span>
+            <span id="courseName" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Authorized Signatory</span>
+            <span id="signatoryInfo" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Issue Date</span>
+            <span id="issueDate" class="detail-value">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Verification Status</span>
+            <span id="certStatus" class="detail-value">-</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: var(--spacing-md); justify-content: center;">
+          <a href="/index.html" class="btn btn-secondary">🔍 Verify Another Code</a>
+          <a href="/login.html" class="btn btn-ghost">Portal Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/utils.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const code = Utils.getUrlParam("code");
+      if (!code) {
+        showResultState({
+          valid: false,
+          status: "INVALID",
+          message: "Invalid Certificate",
+          explanation: "No verification code was supplied in the URL."
+        });
+        return;
+      }
+
+      try {
+        const response = await apiRequest(`/public/verify/${encodeURIComponent(code)}`);
+        showResultState(response);
+      } catch (err) {
+        showResultState({
+          valid: false,
+          status: "INVALID",
+          message: "Invalid Certificate",
+          explanation: err.message
+        });
+      }
+    });
+
+    function showResultState(data) {
+      document.getElementById("loadingState").style.display = "none";
+      document.getElementById("resultState").style.display = "block";
+
+      const badge = document.getElementById("statusBadge");
+      const title = document.getElementById("statusTitle");
+      const subtitle = document.getElementById("statusSubtitle");
+      const detailsCard = document.getElementById("detailsCard");
+
+      if (data.valid && data.status === "ACTIVE") {
+        badge.className = "verify-status-badge status-valid";
+        badge.textContent = "✓";
+        title.textContent = "Certificate Verified";
+        subtitle.textContent = "Verified by Digital Certificate Verification System";
+
+        document.getElementById("studentName").textContent = data.studentName;
+        document.getElementById("certTitle").textContent = data.certificateTitle;
+        document.getElementById("certNumber").textContent = data.certificateNumber;
+        document.getElementById("courseName").textContent = data.courseName;
+        
+        let sigText = data.signatoryOneName ? `${data.signatoryOneName} (${data.signatoryOneDesignation || ''})` : "-";
+        if (data.signatoryTwoName) {
+          sigText += ` & ${data.signatoryTwoName} (${data.signatoryTwoDesignation || ''})`;
+        }
+        document.getElementById("signatoryInfo").textContent = sigText;
+
+        document.getElementById("issueDate").textContent = Utils.formatDate(data.issueDate);
+        document.getElementById("certStatus").innerHTML = `<span class="badge badge-success">ACTIVE & VALID</span>`;
+
+      } else if (data.status === "REVOKED") {
+        badge.className = "verify-status-badge status-revoked";
+        badge.textContent = "⚠";
+        title.textContent = "Certificate Revoked";
+        subtitle.textContent = "This digital certificate is no longer valid and has been revoked by the institution.";
+
+        document.getElementById("studentName").textContent = data.studentName;
+        document.getElementById("certTitle").textContent = data.certificateTitle;
+        document.getElementById("certNumber").textContent = data.certificateNumber;
+        document.getElementById("courseName").textContent = data.courseName;
+
+        let sigText = data.signatoryOneName ? `${data.signatoryOneName} (${data.signatoryOneDesignation || ''})` : "-";
+        if (data.signatoryTwoName) {
+          sigText += ` & ${data.signatoryTwoName} (${data.signatoryTwoDesignation || ''})`;
+        }
+        document.getElementById("signatoryInfo").textContent = sigText;
+
+        document.getElementById("issueDate").textContent = Utils.formatDate(data.issueDate);
+        document.getElementById("certStatus").innerHTML = `<span class="badge badge-danger">REVOKED</span>`;
+
+      } else {
+        badge.className = "verify-status-badge status-invalid";
+        badge.textContent = "✕";
+        title.textContent = "Invalid Certificate";
+        subtitle.textContent = data.explanation || "The verification code provided is invalid, tampered with, or non-existent.";
+        detailsCard.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Certificate Verification System</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 580px;">
+      <div class="auth-header">
+        <div class="auth-logo">✓</div>
+        <h1 class="auth-title text-gradient">Digital Certificate Verification</h1>
+        <p class="auth-subtitle">Verify academic digital certificates securely via Verification Code or QR Code</p>
+      </div>
+
+      <form id="quickVerifyForm">
+        <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+          <label class="form-label" for="verificationCodeInput">Enter Unique Verification Code or UUID</label>
+          <input type="text" id="verificationCodeInput" class="form-control" placeholder="e.g. 31f8b76d-1234-4567-89ab-cdef01234567" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+          🔍 Validate Certificate Authenticity
+        </button>
+      </form>
+
+      <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color); text-align: center;">
+        <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: var(--spacing-md);">Are you an Administrator or Registered Student?</p>
+        <a href="/login.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+          🔑 Sign In to Portal
+        </a>
+      </div>
+
+      <div class="auth-footer">
+        © 2026 Digital Certificate Verification System • MCA Final Year Project
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/utils.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script>
+    document.getElementById("quickVerifyForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const code = document.getElementById("verificationCodeInput").value.trim();
+      if (code) {
+        window.location.href = `/verify.html?code=${encodeURIComponent(code)}`;
+      }
+    });
+  </script>
+</body>
+</html>

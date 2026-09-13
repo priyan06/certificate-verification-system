@@ -1,0 +1,95 @@
+/* src/main/resources/static/css/modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 500px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.modal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.modal-icon.success {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success-color);
+}
+
+.modal-icon.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger-color);
+}
+
+.modal-icon.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning-color);
+}
+
+.modal-icon.info {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--info-color);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.modal-body {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+}

@@ -1,0 +1,289 @@
+/* src/main/resources/static/css/admin.css */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--accent-primary);
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Dashboard 2-Column Section (Recent Activity & Status Overview) */
+.dashboard-grid-2col {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Certificate Status Overview Card */
+.status-overview-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-overview-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.status-overview-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.status-overview-subtitle {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: var(--spacing-md) auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-center-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.chart-center-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.chart-center-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+
+/* Accessible Status Legend */
+.chart-legend {
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-speed);
+}
+
+.legend-row:hover {
+  background: var(--bg-tertiary);
+}
+
+.legend-label-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot-active {
+  background-color: var(--success-color);
+}
+
+.legend-dot-revoked {
+  background-color: var(--danger-color);
+}
+
+.legend-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.legend-values {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.legend-count {
+  font-size: 0.925rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 24px;
+  text-align: right;
+}
+
+.legend-pct {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* Recent Activity Card & Feed */
+.recent-activity-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background var(--transition-speed);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+}
+
+.activity-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-width: 0;
+}
+
+.activity-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.activity-icon.issued {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--success-color);
+}
+
+.activity-icon.revoked {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--danger-color);
+}
+
+.activity-icon.reactivated {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--success-color);
+}
+
+.activity-icon.student {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--info-color);
+}
+
+.activity-details {
+  min-width: 0;
+}
+
+.activity-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-meta {
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-top: 2px;
+}
+

@@ -1,0 +1,41 @@
+/* src/main/resources/static/css/theme.css */
+:root {
+  --bg-primary: #09090B;
+  --bg-secondary: #18181B;
+  --bg-tertiary: #27272A;
+
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+
+  --accent-primary: #A855F7;
+  --accent-secondary: #6366F1;
+  --accent-gradient: linear-gradient(135deg, #A855F7 0%, #6366F1 100%);
+
+  --border-color: #3F3F46;
+
+  --success-color: #22C55E;
+  --warning-color: #F59E0B;
+  --danger-color: #EF4444;
+  --info-color: #3B82F6;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --transition-speed: 0.25s;
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  --glass-bg: rgba(24, 24, 27, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.25);
+}

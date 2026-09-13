@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Digital Certificate System</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+  <div class="app-container">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1 class="text-gradient">Admin Dashboard</h1>
+          <p>System metrics, certificate overview, and student analytics</p>
+        </div>
+        <div class="page-actions">
+          <a href="/admin/issue-certificate.html" class="btn btn-primary">🎓 Issue New Certificate</a>
+        </div>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div>
+            <div class="stat-label">Total Students</div>
+            <div id="statTotalStudents" class="stat-number">0</div>
+          </div>
+        </div>
+
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--info-color); background: rgba(59,130,246,0.1);">📜</div>
+          <div>
+            <div class="stat-label">Certificates Issued</div>
+            <div id="statTotalCertificates" class="stat-number">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--success-color); background: rgba(34,197,94,0.1);">🔒</div>
+          <div>
+            <div class="stat-label">Active Certificates</div>
+            <div id="statActiveCertificates" class="stat-number">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color: var(--danger-color); background: rgba(239,68,68,0.1);">⚠️</div>
+          <div>
+            <div class="stat-label">Revoked Certificates</div>
+            <div id="statRevokedCertificates" class="stat-number">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div>
+            <div class="stat-label">Certificate Templates</div>
+            <div id="statTotalTemplates" class="stat-number">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid-2col">
+        <!-- Recent Activity Section -->
+        <section class="card recent-activity-card" aria-label="Recent Activity">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">🕒 Recent Activity</h2>
+              <p class="text-secondary" style="font-size: 0.825rem; margin-top: 2px;">Latest system events and certificate actions</p>
+            </div>
+            <a href="/admin/certificates.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;">View All</a>
+          </div>
+          <div id="recentActivityList" class="activity-feed">
+            <div class="empty-state" style="padding: var(--spacing-lg);">
+              <div class="empty-state-icon">⏳</div>
+              <div>Loading recent activity...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Certificate Status Overview Section -->
+        <section class="card status-overview-card" aria-label="Certificate Status Overview">
+          <div class="status-overview-header">
+            <h2 class="status-overview-title">Certificate Status Overview</h2>
+            <p class="status-overview-subtitle">Current status of issued certificates</p>
+          </div>
+
+          <div id="statusOverviewBody">
+            <!-- Chart or empty state dynamically rendered -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/auth.js"></script>
+  <script src="/js/common/utils.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <script src="/js/components/sidebar.js"></script>
+  <script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Digital Certificate - Digital Certificate System</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+  <div class="app-container">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1>Issue Digital Certificate</h1>
+          <p>Generate verifiable digital certificate with unique QR code & UUID token</p>
+        </div>
+        <div class="page-actions">
+          <a href="/admin/certificates.html" class="btn btn-secondary">📜 View Issued Certificates</a>
+        </div>
+      </header>
+
+      <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <form id="issueForm">
+          <div class="form-group">
+            <label class="form-label" for="studentSelect">Select Student *</label>
+            <select id="studentSelect" class="form-control" required>
+              <option value="">Loading students...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="templateSelect">Select Certificate Template *</label>
+            <select id="templateSelect" class="form-control" required>
+              <option value="">Loading templates...</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="certificateTitle">Certificate Printed Title *</label>
+              <input type="text" id="certificateTitle" class="form-control" placeholder="e.g. CERTIFICATE OF COMPLETION" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="issueDate">Issue Date *</label>
+              <input type="date" id="issueDate" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="certificateNumber">Certificate Number (Optional)</label>
+            <input type="text" id="certificateNumber" class="form-control" placeholder="Leave blank to auto-generate (e.g. CERT-2026-000005)">
+            <span class="form-text">System will generate unique certificate number if left empty.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="description">Custom Certificate Description / Notes</label>
+            <textarea id="description" class="form-control" placeholder="Specific course completion notes or award honors..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: var(--spacing-md); justify-content: flex-end; margin-top: var(--spacing-lg);">
+            <button type="button" id="previewBtn" class="btn btn-secondary">👁 Preview Details</button>
+            <button type="submit" class="btn btn-primary">🎓 Issue Certificate Now</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/auth.js"></script>
+  <script src="/js/common/utils.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <script src="/js/components/sidebar.js"></script>
+  <script src="/js/admin/issue-certificate.js"></script>
+</body>
+</html>

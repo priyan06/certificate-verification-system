@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate View - Digital Certificate System</title>
+
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/buttons.css">
+  <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+  <div class="app-container">
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1>Certificate View</h1>
+          <p>Detailed verification view for student certificate</p>
+        </div>
+        <div class="page-actions">
+          <a href="/student/certificates.html" class="btn btn-secondary">← Back to My Certificates</a>
+        </div>
+      </header>
+
+      <div id="studentCertDetails" class="card" style="max-width: 800px; margin: 0 auto;">
+        <div class="loader-spinner" style="margin: 40px auto;"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/common/config.js"></script>
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/auth.js"></script>
+  <script src="/js/common/utils.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <script src="/js/components/sidebar.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      renderSidebar("certificates");
+      const id = Utils.getUrlParam("id");
+      if (!id) {
+        window.location.href = "/student/certificates.html";
+        return;
+      }
+
+      try {
+        const cert = await apiRequest(`/student/certificates/${id}`);
+        const container = document.getElementById("studentCertDetails");
+
+        container.innerHTML = `
+          <div class="card-header">
+            <div>
+              <h2 class="text-gradient">${cert.certificateTitle}</h2>
+              <p class="text-secondary">Certificate Number: ${cert.certificateNumber}</p>
+            </div>
+            <span class="badge ${Utils.getStatusBadgeClass(cert.status)}">${cert.status}</span>
+          </div>
+
+          <p style="margin: var(--spacing-md) 0; line-height: 1.6;">${cert.description || ''}</p>
+
+          <div style="margin: var(--spacing-lg) 0; display: flex; gap: var(--spacing-lg); align-items: center; background: var(--bg-tertiary); padding: var(--spacing-md); border-radius: var(--radius-md);">
+            ${cert.qrCodeData ? `<img src="${cert.qrCodeData}" width="120" height="120" style="border-radius: 8px; border: 1px solid var(--border-color);" alt="QR Code">` : ''}
+            <div>
+              <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Public Verification Code</div>
+              <div style="font-family: monospace; font-size: 0.95rem; color: var(--accent-primary); word-break: break-all;">${cert.verificationCode}</div>
+              <a href="${cert.verificationUrl}" target="_blank" style="font-size: 0.85rem; margin-top: 6px; display: inline-block;">🔍 Open Verification Link</a>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: var(--spacing-md);">
+            <a href="/api/certificates/${cert.id}/download" target="_blank" class="btn btn-primary">📥 Download Official PDF</a>
+          </div>
+        `;
+      } catch (err) {
+        showError("Failed to load certificate details: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
