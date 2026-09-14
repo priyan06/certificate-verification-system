@@ -32,7 +32,7 @@ public class CertificateServiceImpl implements CertificateService {
     private final PdfService pdfService;
     private final com.example.certificateverification.repository.ActivityLogRepository activityLogRepository;
 
-    @Value("${app.base-url:https://cert-verify.wolfczartech.net/}")
+    @Value("${app.base-url:https://cert-verify.wolfczartech.net}")
     private String baseUrl;
 
     public CertificateServiceImpl(CertificateRepository certificateRepository,

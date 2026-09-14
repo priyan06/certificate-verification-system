@@ -47,7 +47,7 @@ spring:
         period: 0
 
 app:
-  base-url: https://cert-verify.wolfczartech.net/
+  base-url: https://cert-verify.wolfczartech.net
   upload-dir: uploads/certificates
 
 logging:
