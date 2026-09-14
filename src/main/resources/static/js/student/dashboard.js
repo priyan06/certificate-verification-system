@@ -11,7 +11,10 @@ async function loadStudentDashboard() {
     const certificates = await apiRequest("/student/certificates");
 
     document.getElementById("studentWelcomeName").textContent = profile.name;
-    document.getElementById("studentRollNumber").textContent = profile.rollNumber;
+    const registerNumberEl = document.getElementById("studentRegisterNumber");
+    if (registerNumberEl) {
+      registerNumberEl.textContent = profile.registerNumber || "-";
+    }
     document.getElementById("studentCourse").textContent = profile.course;
     document.getElementById("totalCertificatesCount").textContent = certificates.length;
 
